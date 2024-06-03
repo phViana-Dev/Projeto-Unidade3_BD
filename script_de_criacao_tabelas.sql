@@ -2,7 +2,7 @@
 
 CREATE TABLE Produto (
   idProduto SERIAL NOT NULL,
-  nomeProduto VARCHAR(20),
+  nomeProduto VARCHAR(30),
   descricao TEXT,
   preco DOUBLE PRECISION,
   quantidadeEstoque INTEGER,
@@ -12,19 +12,19 @@ CREATE TABLE Produto (
 CREATE TABLE Endereco (
   idEndereco SERIAL NOT NULL,
   numeroEndereco INTEGER,
-  logradouro VARCHAR(20),
-  bairro VARCHAR(20),
-  cidade VARCHAR(20),
-  estado VARCHAR(20),
+  logradouro VARCHAR(30),
+  bairro VARCHAR(30),
+  cidade VARCHAR(30),
+  estado VARCHAR(30),
   PRIMARY KEY(idEndereco)
 );
 
 CREATE TABLE Pessoa (
   idPessoa SERIAL NOT NULL,
   idEndereco INTEGER NOT NULL,
-  nomePessoa VARCHAR(20),
+  nomePessoa VARCHAR(30),
   cpf VARCHAR(11),
-  email VARCHAR(25),
+  email VARCHAR(30),
   genero CHAR(1) CHECK (genero IN ('F', 'M')),
   PRIMARY KEY(idPessoa),
   FOREIGN KEY(idEndereco) REFERENCES Endereco(idEndereco)
@@ -53,7 +53,7 @@ CREATE TABLE Fornecedor (
   idEndereco INTEGER NOT NULL,
   nomeFornecedor VARCHAR(30),
   cnpj VARCHAR(15),
-  email VARCHAR(20),
+  email VARCHAR(30),
   PRIMARY KEY(idFornecedor),
   FOREIGN KEY(idEndereco) REFERENCES Endereco(idEndereco)
 );
@@ -78,7 +78,7 @@ CREATE TABLE Pedido (
   idPedido SERIAL NOT NULL,
   idCliente INTEGER NOT NULL,
   dataPedido DATE,
-  statusPedido VARCHAR(10) CHECK (statusPedido IN ('aguarde', 'concluído', 'cancelado')),
+  statusPedido VARCHAR(10) CHECK (statusPedido IN ('aguarde', 'concluido', 'cancelado')),
   total DOUBLE PRECISION,
   PRIMARY KEY(idPedido),
   FOREIGN KEY(idCliente) REFERENCES Cliente(idCliente)
@@ -101,7 +101,7 @@ CREATE TABLE Venda (
   idFuncionario INTEGER NOT NULL,
   dataVenda DATE,
   total DOUBLE PRECISION,
-  statusVenda VARCHAR(15) CHECK (statusVenda IN ('concluida', 'em processamento', 'cancelada')),
+  statusVenda VARCHAR(20) CHECK (statusVenda IN ('concluida', 'em processamento', 'cancelada')),
   PRIMARY KEY(idVenda),
   FOREIGN KEY(idFuncionario) REFERENCES Funcionario(idFuncionario),
   FOREIGN KEY(idPedido_Produto) REFERENCES Pedido_Produto(idPedido_Produto)
@@ -113,7 +113,7 @@ CREATE TABLE Entrega (
   idEndereco INTEGER NOT NULL,
   idFuncionario INTEGER NOT NULL,
   dataEntrega DATE,
-  statusEntrega VARCHAR(15) CHECK (statusEntrega IN ('entregue', 'saiu p/ entrega', 'em processamento')),
+  statusEntrega VARCHAR(20) CHECK (statusEntrega IN ('entregue', 'saiu p/ entrega', 'em processamento')),
   PRIMARY KEY(idEntrega),
   FOREIGN KEY(idFuncionario) REFERENCES Funcionario(idFuncionario),
   FOREIGN KEY(idEndereco) REFERENCES Endereco(idEndereco),
